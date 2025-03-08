@@ -585,14 +585,11 @@
   <script>
     // Game data
     const puzzles = [
-      [
-        { "silhouette": "s1.png", "color": "s2.png" },
-        { "silhouette": "s3.png", "color": "s4.png" },
-        { "silhouette": "s5.png", "color": "s6.png" },
-        { "silhouette": "s7.png", "color": "s8.png" },
-        { "silhouette": "s9.png", "color": "s10.png" },
-        // Add more puzzles here
-      ]
+      { "silhouette": "s1.png", "color": "s2.png" },
+      { "silhouette": "s3.png", "color": "s4.png" },
+      { "silhouette": "s5.png", "color": "s6.png" },
+      { "silhouette": "s7.png", "color": "s8.png" },
+      { "silhouette": "s9.png", "color": "s10.png" },
     ];
 
     const teamColors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
@@ -724,6 +721,8 @@
     silhouetteElement.addEventListener('click', () => {
       console.log("Silhouette clicked!"); // Debugging
       const currentPuzzle = puzzles[currentPuzzleIndex];
+      console.log("Current puzzle:", currentPuzzle); // Debugging
+
       if (!currentPuzzle) {
         console.error("No puzzle found at index:", currentPuzzleIndex);
         return;
@@ -779,7 +778,7 @@
       roundCounter.classList.add('hide-on-end');
       teamDisplay.classList.add('hide-on-end');
       puzzleContainer.classList.add('hide-on-end');
-      endGameButton.classList.add('hide-on-end');
+      endGameButton.classList.add('hide-on-end'); // Hide the End Game button
       timerElement.classList.add('hide-on-end');
       timesUpMessage.style.display = "none";
 
@@ -862,7 +861,7 @@
       roundCounter.classList.remove('hide-on-end');
       teamDisplay.classList.remove('hide-on-end');
       puzzleContainer.classList.remove('hide-on-end');
-      endGameButton.classList.remove('hide-on-end');
+      endGameButton.classList.remove('hide-on-end'); // Show the End Game button again
       timerElement.classList.remove('hide-on-end');
       timesUpMessage.style.display = "none";
     }
