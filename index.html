@@ -338,7 +338,7 @@
 
     /* Score Input Buttons */
     .score-input {
-      display: none;
+      display: none; /* Hidden by default */
       width: auto;
       justify-content: space-between;
       gap: 25px;
@@ -567,7 +567,7 @@
       <div id="team-display">Team: <span id="current-team">Red</span></div>
       <div class="puzzle-container">
         <div class="silhouette" data-color="puzzle.png">
-          <img src="kouti.png" alt="Tangram Silhouette">
+          <img src="s1.png" alt="Tangram Silhouette"> <!-- Updated to s1.png -->
         </div>
         <!-- Pre-rendered Space for Buttons -->
         <div class="button-space">
@@ -603,7 +603,7 @@
     let totalRounds = 5;
     let timeLeft = 60;
     let timerDuration = 1;
-    let timerInterval;
+    let timerInterval = null; // Initialize timerInterval globally
     const timerElement = document.getElementById('timer');
     const timesUpMessage = document.getElementById('times-up-message');
     const timesUpSound = document.getElementById('times-up-sound');
@@ -722,10 +722,24 @@
     // Reveal color on click
     const silhouetteElement = document.querySelector('.silhouette');
     silhouetteElement.addEventListener('click', () => {
-      const colorImage = puzzles[currentPuzzleIndex].color;
+      console.log("Silhouette clicked!"); // Debugging
+      const currentPuzzle = puzzles[currentPuzzleIndex];
+      if (!currentPuzzle) {
+        console.error("No puzzle found at index:", currentPuzzleIndex);
+        return;
+      }
+
+      const colorImage = currentPuzzle.color;
+      if (!colorImage) {
+        console.error("No color image found for puzzle:", currentPuzzle);
+        return;
+      }
+
+      console.log("Loading color image:", colorImage); // Debugging
       silhouetteElement.innerHTML = `<img src="${colorImage}" alt="Tangram Color">`;
       clearInterval(timerInterval);
 
+      // Show the score input buttons
       document.querySelector('.score-input').style.display = 'flex';
     });
 
@@ -854,7 +868,12 @@
     }
 
     // End game button
-    document.getElementById('end-game-button').addEventListener('click', announceWinner);
+    function endGame() {
+      announceWinner();
+    }
+
+    // Initialize event listeners
+    document.getElementById('end-game-button').addEventListener('click', endGame);
   </script>
 </body>
 </html>
