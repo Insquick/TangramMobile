@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tangram Challenge</title>
   <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,"> <!-- Suppress favicon error -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     /* General Styles */
@@ -235,6 +236,24 @@
          2px -2px 0 #000,
         -2px  2px 0 #000,
          2px  2px 0 #000; /* Additional shadow for better visibility */
+      position: relative;
+      z-index: 2; /* Ensure the timer is above the glow box */
+    }
+
+    /* Neon Glow Box */
+    #timer::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% + 40px); /* Slightly wider than the timer */
+      height: calc(100% + 20px); /* Slightly taller than the timer */
+      background: black;
+      border-radius: 15px;
+      z-index: -1; /* Place it behind the timer */
+      box-shadow: 0 0 20px var(--team-color, #00ccff), 0 0 40px var(--team-color, #00ccff);
+      opacity: 0.9; /* Higher opacity */
     }
 
     /* Team Display */
@@ -584,13 +603,13 @@
 
   <script>
     // Game data
-    const puzzles = [
-      { "silhouette": "s1.png", "color": "s2.png" },
-      { "silhouette": "s3.png", "color": "s4.png" },
-      { "silhouette": "s5.png", "color": "s6.png" },
-      { "silhouette": "s7.png", "color": "s8.png" },
-      { "silhouette": "s9.png", "color": "s10.png" },
-    ];
+    const puzzles = [];
+    for (let i = 1; i <= 100; i++) {
+      puzzles.push({
+        silhouette: `s${i}.png`,
+        color: `s${i + 1}.png`, // Assuming the color image is the next one in the sequence
+      });
+    }
 
     const teamColors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
     const teamScores = [0, 0, 0, 0, 0, 0];
@@ -663,6 +682,9 @@
       currentTeamDisplay.textContent = currentTeam;
       currentTeamDisplay.style.color = teamColor;
       roundCounter.style.color = teamColor;
+
+      // Update the neon glow behind the timer
+      timerElement.style.setProperty('--team-color', teamColor);
     }
 
     // Start the game
@@ -787,7 +809,10 @@
         .slice(0, numberOfTeams)
         .filter((_, index) => teamScores[index] === maxScore);
 
-      if (winningTeams.length === 1) {
+      // Check if there is a clear winner or a tie
+      const isTie = winningTeams.length > 1;
+
+      if (!isTie) {
         const winningTeam = winningTeams[0];
         gameTitle.innerHTML = `
           <div class="winner-announcement">
@@ -810,7 +835,7 @@
         .sort((a, b) => b.score - a.score);
 
       const scoreList = sortedTeams
-        .map(({ team, score }) => {
+        .map(({ team, score }, index) => {
           let teamColor = "";
           if (team === "Red") teamColor = "#e74c3c";
           else if (team === "Blue") teamColor = "#3498db";
@@ -819,10 +844,21 @@
           else if (team === "Purple") teamColor = "#9b59b6";
           else if (team === "Orange") teamColor = "#e67e22";
 
+          // Add medal emojis for the top 3 teams
+          let medal = "";
+          if (!isTie) {
+            if (index === 0) medal = "🥇"; // 1st place
+            else if (index === 1) medal = "🥈"; // 2nd place
+            else if (index === 2) medal = "🥉"; // 3rd place
+          } else if (score === maxScore) {
+            medal = "🏅"; // Tie emoji for tied teams
+          }
+
           return `<li>
                     <span class="${team.toLowerCase()}" style="color: ${teamColor}">• ${team}</span>
                     <span style="color: ${teamColor}">:</span>
                     <span class="points" style="color: white">${score} point${score !== 1 ? "s" : ""}</span>
+                    <span class="medal">${medal}</span>
                   </li>`;
         })
         .join("");
@@ -847,8 +883,9 @@
       timerDuration = 1;
       teamScores.fill(0);
 
-      const existingGif = document.querySelector('.gif-animation');
-      if (existingGif) existingGif.remove();
+      // Remove all GIF elements
+      const gifElements = document.querySelectorAll('.gif-animation');
+      gifElements.forEach(gif => gif.remove());
 
       setupSection.style.display = "block";
       gameSection.style.display = "none";
