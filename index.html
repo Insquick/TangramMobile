@@ -222,17 +222,42 @@
       display: none;
       position: relative;
       z-index: 2;
+      margin-top: -20px; /* Move the entire game section higher */
     }
 
-    /* Solid Line Outline for Round Counter, Timer, and Team Display */
-    #round-counter,
-    #timer,
+    /* Adjust text sizes */
+    #timer {
+      font-size: 3rem; /* Slightly smaller */
+    }
+
+    /* Team Display */
     #team-display {
+      margin-top: 1rem;
+      font-size: 4.5rem; /* Bigger */
+      font-weight: 900;
+      color: #ffffff;
       -webkit-text-stroke: 1px black; /* Solid black outline */
       paint-order: stroke fill; /* Ensures the outline is behind the text */
-      color: white; /* Ensure text color is white */
-      font-size: 2.5rem; /* Larger text size */
-      font-weight: 900; /* Bolder text */
+      text-shadow: 
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000; /* Additional shadow for better visibility */
+    }
+
+    /* Round Counter */
+    #round-counter {
+      font-size: 4.5rem; /* Bigger */
+      font-weight: 900;
+      margin: 1rem 0;
+      color: #ffffff;
+      -webkit-text-stroke: 1px black; /* Solid black outline */
+      paint-order: stroke fill; /* Ensures the outline is behind the text */
+      text-shadow: 
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000; /* Additional shadow for better visibility */
     }
 
     /* Time's Up! Message */
@@ -362,22 +387,6 @@
       background: #c0392b;
       transform: scale(1.05);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    /* Team Display */
-    #team-display {
-      margin-top: 1rem;
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #ffffff;
-    }
-
-    /* Round Counter */
-    #round-counter {
-      font-size: 1.5rem;
-      font-weight: 900;
-      margin: 1rem 0;
-      color: #ffffff;
     }
 
     /* End Game Button */
@@ -550,8 +559,8 @@
       <div id="timer">1:00</div>
       <div id="team-display">Team: <span id="current-team">Red</span></div>
       <div class="puzzle-container">
-        <div class="silhouette" data-color="s1.png">
-          <img src="s1.png" alt="Tangram Silhouette">
+        <div class="silhouette" data-color="puzzle.png">
+          <img src="kouti.png" alt="Tangram Silhouette">
         </div>
         <!-- Pre-rendered Space for Buttons -->
         <div class="button-space">
@@ -569,56 +578,58 @@
   <script>
     // Game data
     const puzzles = [
-   { "silhouette": "s1.png", "color": "s2.png" },
-  { "silhouette": "s3.png", "color": "s4.png" },
-  { "silhouette": "s5.png", "color": "s6.png" },
-  { "silhouette": "s7.png", "color": "s8.png" },
-  { "silhouette": "s9.png", "color": "s10.png" },
-  { "silhouette": "s11.png", "color": "s12.png" },
-  { "silhouette": "s13.png", "color": "s14.png" },
-  { "silhouette": "s15.png", "color": "s16.png" },
-  { "silhouette": "s17.png", "color": "s18.png" },
-  { "silhouette": "s19.png", "color": "s20.png" },
-  { "silhouette": "s21.png", "color": "s22.png" },
-  { "silhouette": "s23.png", "color": "s24.png" },
-  { "silhouette": "s25.png", "color": "s26.png" },
-  { "silhouette": "s27.png", "color": "s28.png" },
-  { "silhouette": "s29.png", "color": "s30.png" },
-  { "silhouette": "s31.png", "color": "s32.png" },
-  { "silhouette": "s33.png", "color": "s34.png" },
-  { "silhouette": "s35.png", "color": "s36.png" },
-  { "silhouette": "s37.png", "color": "s38.png" },
-  { "silhouette": "s39.png", "color": "s40.png" },
-  { "silhouette": "s41.png", "color": "s42.png" },
-  { "silhouette": "s43.png", "color": "s44.png" },
-  { "silhouette": "s45.png", "color": "s46.png" },
-  { "silhouette": "s47.png", "color": "s48.png" },
-  { "silhouette": "s49.png", "color": "s50.png" },
-  { "silhouette": "s51.png", "color": "s52.png" },
-  { "silhouette": "s53.png", "color": "s54.png" },
-  { "silhouette": "s55.png", "color": "s56.png" },
-  { "silhouette": "s57.png", "color": "s58.png" },
-  { "silhouette": "s59.png", "color": "s60.png" },
-  { "silhouette": "s61.png", "color": "s62.png" },
-  { "silhouette": "s63.png", "color": "s64.png" },
-  { "silhouette": "s65.png", "color": "s66.png" },
-  { "silhouette": "s67.png", "color": "s68.png" },
-  { "silhouette": "s69.png", "color": "s70.png" },
-  { "silhouette": "s71.png", "color": "s72.png" },
-  { "silhouette": "s73.png", "color": "s74.png" },
-  { "silhouette": "s75.png", "color": "s76.png" },
-  { "silhouette": "s77.png", "color": "s78.png" },
-  { "silhouette": "s79.png", "color": "s80.png" },
-  { "silhouette": "s81.png", "color": "s82.png" },
-  { "silhouette": "s83.png", "color": "s84.png" },
-  { "silhouette": "s85.png", "color": "s86.png" },
-  { "silhouette": "s87.png", "color": "s88.png" },
-  { "silhouette": "s89.png", "color": "s90.png" },
-  { "silhouette": "s91.png", "color": "s92.png" },
-  { "silhouette": "s93.png", "color": "s94.png" },
-  { "silhouette": "s95.png", "color": "s96.png" },
-  { "silhouette": "s97.png", "color": "s98.png" },
-  { "silhouette": "s99.png", "color": "s100.png" }
+      [
+        { "silhouette": "s1.png", "color": "s2.png" },
+        { "silhouette": "s3.png", "color": "s4.png" },
+        { "silhouette": "s5.png", "color": "s6.png" },
+        { "silhouette": "s7.png", "color": "s8.png" },
+        { "silhouette": "s9.png", "color": "s10.png" },
+        { "silhouette": "s11.png", "color": "s12.png" },
+        { "silhouette": "s13.png", "color": "s14.png" },
+        { "silhouette": "s15.png", "color": "s16.png" },
+        { "silhouette": "s17.png", "color": "s18.png" },
+        { "silhouette": "s19.png", "color": "s20.png" },
+        { "silhouette": "s21.png", "color": "s22.png" },
+        { "silhouette": "s23.png", "color": "s24.png" },
+        { "silhouette": "s25.png", "color": "s26.png" },
+        { "silhouette": "s27.png", "color": "s28.png" },
+        { "silhouette": "s29.png", "color": "s30.png" },
+        { "silhouette": "s31.png", "color": "s32.png" },
+        { "silhouette": "s33.png", "color": "s34.png" },
+        { "silhouette": "s35.png", "color": "s36.png" },
+        { "silhouette": "s37.png", "color": "s38.png" },
+        { "silhouette": "s39.png", "color": "s40.png" },
+        { "silhouette": "s41.png", "color": "s42.png" },
+        { "silhouette": "s43.png", "color": "s44.png" },
+        { "silhouette": "s45.png", "color": "s46.png" },
+        { "silhouette": "s47.png", "color": "s48.png" },
+        { "silhouette": "s49.png", "color": "s50.png" },
+        { "silhouette": "s51.png", "color": "s52.png" },
+        { "silhouette": "s53.png", "color": "s54.png" },
+        { "silhouette": "s55.png", "color": "s56.png" },
+        { "silhouette": "s57.png", "color": "s58.png" },
+        { "silhouette": "s59.png", "color": "s60.png" },
+        { "silhouette": "s61.png", "color": "s62.png" },
+        { "silhouette": "s63.png", "color": "s64.png" },
+        { "silhouette": "s65.png", "color": "s66.png" },
+        { "silhouette": "s67.png", "color": "s68.png" },
+        { "silhouette": "s69.png", "color": "s70.png" },
+        { "silhouette": "s71.png", "color": "s72.png" },
+        { "silhouette": "s73.png", "color": "s74.png" },
+        { "silhouette": "s75.png", "color": "s76.png" },
+        { "silhouette": "s77.png", "color": "s78.png" },
+        { "silhouette": "s79.png", "color": "s80.png" },
+        { "silhouette": "s81.png", "color": "s82.png" },
+        { "silhouette": "s83.png", "color": "s84.png" },
+        { "silhouette": "s85.png", "color": "s86.png" },
+        { "silhouette": "s87.png", "color": "s88.png" },
+        { "silhouette": "s89.png", "color": "s90.png" },
+        { "silhouette": "s91.png", "color": "s92.png" },
+        { "silhouette": "s93.png", "color": "s94.png" },
+        { "silhouette": "s95.png", "color": "s96.png" },
+        { "silhouette": "s97.png", "color": "s98.png" },
+        { "silhouette": "s99.png", "color": "s100.png" }
+      ]
     ];
 
     const teamColors = ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"];
