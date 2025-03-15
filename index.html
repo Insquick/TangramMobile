@@ -61,7 +61,7 @@
     /* Container with Dark Blue Stripes and Moving Gradient */
     .container {
       position: relative;
-      padding: 1rem;
+      padding: 2rem 1rem 1rem; /* Adjusted padding-top to 2rem */
       border-radius: 15px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       text-align: center;
@@ -247,13 +247,24 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: calc(100% + 40px); /* Slightly wider than the timer */
+      width: 200px; /* Fixed width */
       height: calc(100% + 20px); /* Slightly taller than the timer */
       background: black;
       border-radius: 15px;
       z-index: -1; /* Place it behind the timer */
       box-shadow: 0 0 20px var(--team-color, #00ccff), 0 0 40px var(--team-color, #00ccff);
       opacity: 0.9; /* Higher opacity */
+      animation: glow-pulse 2s infinite ease-in-out; /* Turn down, turn up effect */
+    }
+
+    /* Turn Down, Turn Up Effect */
+    @keyframes glow-pulse {
+      0%, 100% {
+        box-shadow: 0 0 20px var(--team-color, #00ccff), 0 0 40px var(--team-color, #00ccff);
+      }
+      50% {
+        box-shadow: 0 0 10px var(--team-color, #00ccff), 0 0 20px var(--team-color, #00ccff);
+      }
     }
 
     /* Team Display */
@@ -275,7 +286,7 @@
     #round-counter {
       font-size: 2rem; /* Adjusted to 2rem */
       font-weight: 900;
-      margin: 1rem 0;
+      margin: -2.5rem 0 1rem 0; /* Adjusted margin to raise it higher */
       color: #ffffff;
       -webkit-text-stroke: 1px black; /* Solid black outline */
       paint-order: stroke fill; /* Ensures the outline is behind the text */
